@@ -1,6 +1,9 @@
 package wallet
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // Bitcoin the new currency
 type Bitcoin int
@@ -20,8 +23,13 @@ func (w *Wallet) Deposit(quantity Bitcoin) {
 }
 
 // Withdraw to withdraw money!
-func (w *Wallet) Withdraw(quantity Bitcoin) {
-	w.balance -= quantity
+func (w *Wallet) Withdraw(quantity Bitcoin) error {
+	tmpBalance := w.balance - quantity
+	if tmpBalance < 0 {
+		return errors.New("Not enough balance ")
+	}
+	w.balance = tmpBalance
+	return nil
 }
 
 // Balance to retrieve the balance!
