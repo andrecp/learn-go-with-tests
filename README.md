@@ -29,3 +29,9 @@ func BenchmarkRepeat(b *testing.B) {
 	}
 }
 ```
+
+## Coverage
+
+100% Coverage doesn't need to be a goal but handy to see where you're at
+
+`go test -cover`
