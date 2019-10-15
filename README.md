@@ -37,3 +37,9 @@ func BenchmarkRepeat(b *testing.B) {
 100% Coverage doesn't need to be a goal but handy to see where you're at
 
 `go test -cover`
+
+## Race condition
+
+```go
+go test -race
+```
