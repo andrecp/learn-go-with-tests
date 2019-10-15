@@ -10,18 +10,36 @@ import (
 var countDownStart = 3
 var finalWord = "Go!"
 
-func Countdown(out io.Writer) error {
+type Sleeper interface {
+	Sleep()
+}
+
+type SpySleeper struct {
+	Calls int
+}
+
+type DefaultSleeper struct{}
+
+func (d *DefaultSleeper) Sleep() {
+	time.Sleep(1 * time.Second)
+}
+
+func (s *SpySleeper) Sleep() {
+	s.Calls++
+}
+
+func Countdown(out io.Writer, sleep Sleeper) error {
 	for i := countDownStart; i >= 1; i-- {
 		fmt.Fprintln(out, i)
-		time.Sleep(1 * time.Second)
+		sleep.Sleep()
 
 	}
 
-	time.Sleep(1 * time.Second)
+	sleep.Sleep()
 	fmt.Fprint(out, "Go!")
 	return nil
 }
 
 func main() {
-	Countdown(os.Stdout)
+	Countdown(os.Stdout, &DefaultSleeper{})
 }
